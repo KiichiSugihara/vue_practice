@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <title>はじめてのVue.js</title>
+<!-- vue インストール -->
 <script src="https://unpkg.com/vue@2.5.17"></script>
 
+<!-- Vueでレンダリングされる部分 -->
 <div id="app"></div>
 <script>
+
+// app 部分 に以下のVueインスタンスを生成しマウント
 new Vue({
   template:'<p>{{msg}}</p>',
   data: {msg:'hello world!'}
