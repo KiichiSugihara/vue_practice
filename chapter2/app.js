@@ -20,6 +20,13 @@ var items = [
     el: '#app',
     data: { //dataプロパティを設定 データには、データそのもののみ置く
       items: items
+    },
+    filters: {//フィルタの定義
+      numberWithDelimiter: function (value) {
+        if (!value) {
+          return '0'
+        }
+        return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+      }
     }
   });
-  window.vm =vm
