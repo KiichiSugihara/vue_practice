@@ -18,7 +18,8 @@ var items = [
 
   var vm = new Vue({
     el: '#app',
-    data: { //dataプロパティを設定
+    data: { //dataプロパティを設定 データには、データそのもののみ置く
       items: items
     }
   });
+  window.vm =vm
