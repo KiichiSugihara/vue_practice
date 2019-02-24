@@ -3,11 +3,62 @@
 <script src="https://unpkg.com/vue@2.5.17"></script>
 
 <div id="app">
-  <p>{{items[0].name}}</p>
-  <p>{{items[1].name}}</p>
-  <p>{{items[2].name}}</p>
 <p>{{items[0].name}}: {{items[0].price}} x {{items[0].quantity}}</p>
-<p>フィルタ処理例 {{1000 | numberWithDelimiter}}</p>
+<p>小計:{{totalPrice | numberWithDelimiter}}円</p>
+<p>合計(税込) {{totalPriceWithTax | numberWithDelimiter}}円</p>
 </div>
 
-<script src="app.js"></script>
+<script >
+  var items = [
+  {
+    name: '鉛筆',
+    price: 300,
+    quantity: 0
+  },
+  {
+    name: 'ノート',
+    price: 400,
+    quantity: 0
+  },
+  {
+    name: '消しゴム',
+    price: 500,
+    quantity: 0
+  }
+]
+// var tax = [
+//   {
+//   japan_tax : 1.08,
+//   us_tax: 1.20
+// }
+//]
+var vm = new Vue({
+  el: '#app',
+    data: { //dataプロパティを設定 データには、データそのもののみ置く
+      items: items,
+      // tax:tax
+    },
+    filters: {//フィルタの定義
+      numberWithDelimiter: function (value) {
+        // 値がないと0を返す。
+        if (!value) {
+          return '0'
+        }
+        // 値があると、数値を文字列に変更し、３桁ごとに,を１つ入れて返す
+        return value.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+      }
+    },
+    computed: {
+      totalPrice: function () {
+        // 現在の合計金額と現在の商品金額を足す
+        return this.items.reduce(function (sum, item) {
+          return sum + (item.price * item.quantity)
+        },0)
+      },
+      // 税込
+      totalPriceWithTax: function () {
+        return Math.floor(this.totalPrice * 1.08)
+      }
+    },
+  });
+</script>
