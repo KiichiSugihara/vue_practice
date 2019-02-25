@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<title>Vue.jsでフック</title>
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+  <p>{{count}}</p>
+</div>
+<script>
+  var vm =new Vue({
+    el:'#app',
+    data:function(){
+      return {
+        count:0,
+        timerId:null
+      }
+    },
+    // インスタンスが生成されてデータが初期化された後に呼ばれる
+    created:function(){
+      console.log('created')
+      var that=this
+      //データに参照できる
+      console.log(this.count)
+      //DOM要素が紐づいていないので undefined
+      console.log(this.$el)
+      //タイマー処理を開始する
+      this.timerId=setInterval(function(){
+        that.count+=1
+      },1000)
+    },
+    // インスタンスにDOM要素が紐づいた後に呼ばれる
+    mounted:function(){
+      console.log('mounted')
+      //DOM要素が紐づいてる
+      console.log(this.$el)
+    },
+    // インスタンスが破棄される前に呼ばれる
+    beforeDestroy() {
+      console.log('beforeDestroy')
+      //タイマーの後始末を行う
+      clearInterval(this.timerId)
+    },
+  })
+</script>
